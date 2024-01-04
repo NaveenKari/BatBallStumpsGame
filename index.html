@@ -40,6 +40,14 @@
   >Stumps</button>
   
 <script>
+  let score = {
+    win: 0,
+    lost:0,
+    tie:0,
+    displayScore: function(){
+     return `won : ${this.win},  Lost : ${this.lost}, Tie: ${this.tie}`
+    },
+  };
   
   
   function generateComputerChoice(){
@@ -59,30 +67,39 @@
   function getResult(userMove,computerMove){
     if (userMove === 'Bat'){
       if (computerMove == 'Ball'){
+        score.win++;
         return 'User Won';
       }else if(computerMove == 'Stumps'){
+        score.lost++;
         return'User Defeated';
       }
       else if(computerMove == 'Bat'){
+        score.tie++;
         return 'It is a tie';  }
 
     }else if(userMove === 'Ball')
     {
       if (computerMove == 'Ball'){
+        score.tie++;
         return 'It is a tie';
       }else if(computerMove == 'Stumps'){
+        score.win++;
         return'User Won';
       }
       else if(computerMove == 'Bat'){
+        score.lost++;
         return 'User Defeated';  }
 
     }else{
       if (computerMove == 'Ball'){
+        score.lost++;
         return 'User Defeated';
       }else if(computerMove == 'Stumps'){
+        score.tie++;
         return'It is a tie';
       }
       else if(computerMove == 'Bat'){
+        score.win++;
         return 'User Won';  }
 
 
@@ -90,7 +107,12 @@
   }
 
   function showResult(userMove,computerMove,result){
-    alert(` ${userMove}, Computer choice is ${computerMove} and ${result}`);
+    
+    alert(` ${userMove}, Computer choice is ${computerMove} and 
+    
+    ${result}
+    
+    ${score.displayScore()}`);
   }
 
 </script>
