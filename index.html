@@ -8,16 +8,16 @@
 </head>
 <body>
   <h1>Bat Ball Stumps Game</h1>
-  <button onclick="
+  <button class="choice-button" onclick="
   
       let userChoice = 'You have chosen Bat';
       let computerChoice=generateComputerChoice();
       let resultMsg = getResult('Bat',computerChoice);
       showResult(userChoice,computerChoice,resultMsg);
-  ">Bat</button>
+  "><img src="images/bat.png" alt="bat-image" class = choice-image></button>
 
 
-  <button onclick="
+  <button  class="choice-button" onclick="
   
   userChoice = 'You have chosen Ball';
   computerChoice=generateComputerChoice();
@@ -26,10 +26,10 @@
   
   
   
-  ">Ball</button>
+  "><img src="images/ball.png" alt="ball-image" class = choice-image></button>
 
 
-  <button
+  <button class="choice-button"
   onclick="
   
   userChoice = 'You have chosen Stumps';
@@ -37,17 +37,50 @@
   resultMsg = getResult('Stumps',computerChoice);
   showResult(userChoice,computerChoice,resultMsg);
   "
-  >Stumps</button>
+  ><img src="images/stump.png" alt="stumps-image" class = choice-image></button>
+
   
+
+  <h3 id="user-move"></h3>
+  <h3 id="computer-move"></h3>
+  <h3 id="Result"></h3>
+  <h3 id="showResult"></h3>
+  <button onclick="
+  localStorage.clear();
+  resetScore( );
+  showResult();
+  
+  ">Reset</button>
 <script>
-  let score = {
+  let scoreStr = localStorage.getItem('score');
+  let score;
+  resetScore(scoreStr);
+
+
+  function resetScore(scoreStr){
+    score = scoreStr? JSON.parse(scoreStr) :
+  {
     win: 0,
     lost:0,
     tie:0,
-    displayScore: function(){
-     return `won : ${this.win},  Lost : ${this.lost}, Tie: ${this.tie}`
-    },
   };
+  score.displayScore= function(){
+     return `won : ${this.win},  Lost : ${this.lost}, Tie: ${this.tie}`;
+    };
+
+  }
+  
+  // if (scoreStr !== undefined){
+  //   score= JSON.parse(scoreStr);
+  // }
+  // else{
+
+  // score = {
+  //   win: 0,
+  //   lost:0,
+  //   tie:0,
+  // };}
+  
   
   
   function generateComputerChoice(){
@@ -107,12 +140,22 @@
   }
 
   function showResult(userMove,computerMove,result){
+    localStorage.setItem('score',JSON.stringify(score));
+    document.querySelector('#user-move').innerText =
+    userMove  ? 
+     `${userMove}` : ' ';
+     document.querySelector('#computer-move').innerText = computerMove  ?
+     `Computer choice is ${computerMove}`: ' ';
+     document.querySelector('#Result').innerText = result ?
+     `${result}`: ' ';
+     document.querySelector('#showResult').innerText =
+     `ScoreBoard : ${score.displayScore()}`;
     
-    alert(` ${userMove}, Computer choice is ${computerMove} and 
+    // alert(` ${userMove}, Computer choice is ${computerMove} and 
     
-    ${result}
+    // ${result}
     
-    ${score.displayScore()}`);
+    // ${score.displayScore()}`);
   }
 
 </script>
